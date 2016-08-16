@@ -19,10 +19,13 @@
 package org.matsim.example;
 
 import org.matsim.api.core.v01.Scenario;
+import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
+import org.matsim.core.events.EventsUtils;
+import org.matsim.core.events.MatsimEventsReader;
 import org.matsim.core.scenario.ScenarioUtils;
 
 /**
@@ -33,20 +36,31 @@ public class HelloWorld {
 // a comment
 
 	public static void main(String[] args) {
-		
-		// This creates a default matsim config:
-		Config config = ConfigUtils.createConfig();
-		
-		config.controler().setLastIteration(1);
-		config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+//
+//		// This creates a default matsim config:
+//		Config config = ConfigUtils.loadConfig( "C:\\Users\\I309939\\Documents\\matsim-example-project\\src\\main\\java\\org\\matsim\\example\\example-config.xml" ) ;
+//
+//		config.controler().setLastIteration(1);
+//		config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+//
+//		// This creates a default matsim scenario (which is empty):
+//		Scenario scenario = ScenarioUtils.createScenario(config) ;
+//
+//		Controler controler = new Controler( scenario ) ;
+//
+//		// This indeed runs iterations, but based on an empty scenario:
+//		controler.run();
 
-		// This creates a default matsim scenario (which is empty):
-		Scenario scenario = ScenarioUtils.createScenario(config) ;
 
-		Controler controler = new Controler( scenario ) ;
+		//path to events file
+		String inputFile = "output\\0.events.txt.gz";
+		//create an event object
+		EventsManager events = EventsUtils.createEventsManager();
 
-		// This indeed runs iterations, but based on an empty scenario:
-		controler.run();
+		//create the reader and read the file
+		MatsimEventsReader reader = new MatsimEventsReader(events);
+		reader.readFile(inputFile);
+
 
 	}
 
